@@ -5,7 +5,7 @@ To create indices from sermons
 
 - User provides a list of sermons in order
 - User provides a file for each sermon with paragraphs and indexable words/phrases separated by line breaks:
-    1
+    1 
     Virgin Mary
     oxen
     2
