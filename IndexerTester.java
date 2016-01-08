@@ -2,22 +2,49 @@
  *    Emily Stuckey
  *    1-5-16
  */
+ import java.util.*;
 
 public class IndexerTester {
 
-  public SermCit CitCreator(String word, String serm, int para){
-    return new SermCit(word, serm, para);
+  public void CitTester(){
+    SermCit howdy = new SermCit("3", 8);
+    SermCit weal = new SermCit("3", 5);
+    SermCit howdy2 = new SermCit("2", 19);
+    SermCit howdy3 = new SermCit("3", 8);
+    System.out.println(howdy + "\n" + weal + "\n" + howdy2 + "\n" + howdy3);
+    CitCompare(howdy, howdy3);
+    CitCompare(howdy, howdy2);
+    CitCompare(howdy2, howdy3);
   }
+
+  public void CitCompare(SermCit a, SermCit b){
+    System.out.println("Comparing " + a + " to " + b);
+    System.out.println(a.compareTo(b));
+  }
+
+
+
+
+  public void IndexEntryTester(){
+    SermCit x = new SermCit("3", 2);
+    List<SermCit> y = new ArrayList<SermCit>();
+    y.add(x);
+    IndexEntry bob = new IndexEntry("holy", y);
+    System.out.println(bob);
+    SermCit z = new SermCit("2", 1);
+    bob.add(z);
+    System.out.println(bob);
+    IndexEntry james = new IndexEntry("berry", "6", 5);
+    james.add("3", 7);
+    System.out.println(james);
+  }
+
 
   public static void main(String[] args){
     IndexerTester test = new IndexerTester();
-    SermCit howdy = test.CitCreator("howdy", "3", 8);
-    SermCit weal = test.CitCreator("weal", "3", 5);
-    SermCit howdy2 = test.CitCreator("howdy", "3", 19);
-    SermCit howdy3 = test.CitCreator("howdy", "3", 8);
-    System.out.println(howdy + "\n" + weal + "\n" + howdy2 + "\n" + howdy3 + "\n" +
-      "howdy before weal? " + (howdy.compareTo(weal) < 0));
-    System.out.println("howdy before howdy2? " + (howdy.compareTo(howdy2) < 0));
-    System.out.println("howdy before howdy3?" + (howdy.compareTo(howdy3) < 0));
+
+    test.CitTester();     //citations
+
+    test.IndexEntryTester();
   }
 }
