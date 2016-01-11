@@ -39,12 +39,30 @@ public class IndexerTester {
     System.out.println(james);
   }
 
+  public void makeIndex(){
+    System.out.println("\nIndex running");
+    Index jacob = new Index();
+    SermCit x = new SermCit("3", 2);
+    IndexEntry james = new IndexEntry("berry", "6", 6);
+    james.add("3", 7);
+    james.add(x);
+    jacob.add(james);
+    jacob.add(new IndexEntry("buffalo", "2", 1));
+    jacob.add(new IndexEntry("berry", "6", 6));
+    jacob.add(new IndexEntry("berry", "5", 3));
+    jacob.add(new IndexEntry("apple", "2", 7));
+    System.out.println(jacob);
+  }
+
+  public void testIndexMaker(){
+    IndexMaker jerry = new IndexMaker();
+  }
+
 
   public static void main(String[] args){
     IndexerTester test = new IndexerTester();
+    test.makeIndex();
+    test.testIndexMaker();
 
-    test.CitTester();     //citations
-
-    test.IndexEntryTester();
   }
 }

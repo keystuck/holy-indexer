@@ -19,6 +19,14 @@ public class IndexEntry{
 
   }
 
+  public String getWord(){
+    return word;
+  }
+
+  public List<SermCit> getCits(){
+    return citations;
+  }
+
   public void add(SermCit newCit){
     if (citations == null){
       citations = new ArrayList<SermCit>();
@@ -40,9 +48,19 @@ public class IndexEntry{
     }
   }
 
+  public void add(List<SermCit> citList){
+    for (SermCit x : citList){
+      add(x);
+    }
+  }
+
   public void add(String sermon, int para){
     SermCit cit = new SermCit(sermon, para);
     this.add(cit);
+  }
+
+  public int compareTo(IndexEntry other){
+    return word.compareTo(other.getWord());
   }
 
   public String toString(){
