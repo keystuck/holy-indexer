@@ -1,6 +1,8 @@
 /*  Testers for sermon Indexer
  *    Emily Stuckey
  *    1-5-16
+ *    This file is for testing while developing.  
+ *    For actual use, use SermonIndexMaker
  */
  import java.util.*;
 
