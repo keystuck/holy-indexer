@@ -81,7 +81,8 @@ public class Index extends ArrayList<IndexEntry>{
       return super.add(newEnt);
     }
     else {
-      findOrAdd(newEnt.getWord());
+      IndexEntry x = findOrAdd(newEnt.getWord());
+      x.add(newEnt.getCits());
       return true;
     }
   }
@@ -90,6 +91,7 @@ public class Index extends ArrayList<IndexEntry>{
     String result = "";
     String ender = "";
     for (IndexEntry blah : this){
+
       result += ender + blah.toString();
         ender = "\n";
     }
