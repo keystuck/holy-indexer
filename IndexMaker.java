@@ -124,19 +124,19 @@ notDone4: while (!done){
       String fName1 = input.next();
       if (fName1.equalsIgnoreCase("exit")){
         done = true;
-        break notDone3;
+        break notDone4;
       }
       System.out.print("Enter name of second file (remember extension): ");
       String fName2 = input.next();
       if (fName2.equalsIgnoreCase("exit")){
         done = true;
-        break notDone3;
+        break notDone4;
       }
       System.out.print("Enter name of destination (remember extension): ");
       String fName3 = input.next();
       if (fName3.equalsIgnoreCase("exit")){
         done = true;
-        break notDone3;
+        break notDone4;
       }
       try {
         //Open the given files
