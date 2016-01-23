@@ -20,11 +20,14 @@ public class IndexEntry{
 
 //for reading in an indexentry from a file
   public IndexEntry(String entry){
+    citations = new ArrayList<SermCit>();
     word = entry.substring(0, entry.indexOf("\t"));
     entry = entry.substring(entry.lastIndexOf("\t")+1);
     int comm = entry.indexOf(",");
     while (comm != -1){
+      System.out.println("passing in: " + entry.substring(0, comm));
       citations.add(new SermCit(entry.substring(0, comm)));
+      System.out.println("okay: " + entry.substring(0, comm));
       entry = entry.substring(comm + 2);
       comm = entry.indexOf(",");
     }

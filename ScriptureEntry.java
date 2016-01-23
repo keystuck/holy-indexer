@@ -41,7 +41,19 @@ public class ScriptureEntry{
   public ScriptureEntry(String bk, int chap, String vrs, String sermon, int para){
     this(new ScriptCit(bk, chap, vrs), null);
     this.add(sermon, para);
+  }
 
+  public ScriptureEntry(String altogether){
+    chapVerse = new ScriptCit(altogether.substring(0, altogether.indexOf("\t")));
+    altogether = altogether.substring(altogether.lastIndexOf("\t")+1);
+    int comm = altogether.indexOf(",");
+    citations = new ArrayList<SermCit>();
+    while (comm != -1){
+      citations.add(new SermCit(altogether.substring(0, comm)));
+      altogether = altogether.substring(comm+2);
+      comm = altogether.indexOf(",");
+    }
+    citations.add(new SermCit(altogether));
   }
 
   public ScriptCit getScript(){
@@ -89,7 +101,7 @@ public class ScriptureEntry{
   }
 
   public String toString(){
-    String result = chapVerse.toString() + "      ";
+    String result = chapVerse.toString() + "\t\t";
     String comm = "";
     for (SermCit blah : citations){
       result += comm + blah;

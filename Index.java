@@ -53,9 +53,11 @@ public class Index extends ArrayList<IndexEntry>{
       String nextL2 = file2.readLine();
       while (nextL1 != null){
         this.add(new IndexEntry(nextL1));
+        nextL1 = file1.readLine();
       }
       while (nextL2 != null){
         this.add(new IndexEntry(nextL2));
+        nextL2 = file2.readLine();
       }
     } catch (IOException e){
       System.out.println("problem in constructing merged index: " + e.getMessage());

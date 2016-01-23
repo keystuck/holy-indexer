@@ -32,7 +32,6 @@ public class ScriptureIndex extends ArrayList<ScriptureEntry>{
         //else add the scriptural reference on that line to the index
         else
         {
-          System.out.println("now adding " + nextL);
           ScriptureEntry indEnt = findOrAdd(new ScriptCit(nextL));
           indEnt.add(sermon, para);
 
@@ -43,6 +42,27 @@ public class ScriptureIndex extends ArrayList<ScriptureEntry>{
       System.out.println("IO exception: " + e.getMessage());
     }
   }
+
+  public ScriptureIndex(FileReader f1, FileReader f2){
+    this();
+    try {
+      BufferedReader file1 = new BufferedReader(f1);
+      BufferedReader file2 = new BufferedReader(f2);
+      String nextL1 = file1.readLine();
+      String nextL2 = file2.readLine();
+      while (nextL1 != null){
+        this.add(new ScriptureEntry(nextL1));
+        nextL1 = file1.readLine();
+      }
+      while (nextL2 != null){
+        this.add(new ScriptureEntry(nextL2));
+        nextL2 = file2.readLine();
+      }
+    } catch (IOException e){
+      System.out.println("problem in constructing merged index: " + e.getMessage());
+    }
+  }
+
 
 
   public ScriptureEntry findOrAdd(ScriptCit newEnt){
