@@ -89,7 +89,7 @@ public class ScriptureEntry{
   }
 
   public String toString(){
-    String result = chapVerse.toString() + "\t";
+    String result = chapVerse.toString() + "      ";
     String comm = "";
     for (SermCit blah : citations){
       result += comm + blah;

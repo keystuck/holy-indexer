@@ -1,7 +1,7 @@
 /*  Testers for sermon Indexer
  *    Emily Stuckey
  *    1-5-16
- *    This file is for testing while developing.  
+ *    This file is for testing while developing.
  *    For actual use, use SermonIndexMaker
  */
  import java.util.*;
@@ -103,9 +103,20 @@ public class IndexerTester {
     System.out.println(indA.compareTo(indB));
   }
 
+  public void ScriptIndexTester(){
+    ScriptureEntry indA = new ScriptureEntry("John", 3, "7");
+    indA.add("1", 3);
+    indA.add("1", 2);
+    ScriptureEntry indB = new ScriptureEntry("1 Kgs", 4, "17-20", "4", 12);
+      ScriptureIndex index1 = new ScriptureIndex();
+      index1.add(indA);
+      index1.add(indB);
+      System.out.println(index1);
+  }
+
   public static void main(String[] args){
     IndexerTester test = new IndexerTester();
-    test.ScriptEntryTester();
-
+  
+    test.ScriptIndexTester();
   }
 }

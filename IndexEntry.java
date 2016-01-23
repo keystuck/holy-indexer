@@ -16,7 +16,19 @@ public class IndexEntry{
   public IndexEntry(String wd, String sermon, int para){
     this(wd, null);
     this.add(sermon, para);
+  }
 
+//for reading in an indexentry from a file
+  public IndexEntry(String entry){
+    word = entry.substring(0, entry.indexOf("\t"));
+    entry = entry.substring(entry.lastIndexOf("\t")+1);
+    int comm = entry.indexOf(",");
+    while (comm != -1){
+      citations.add(new SermCit(entry.substring(0, comm)));
+      entry = entry.substring(comm + 2);
+      comm = entry.indexOf(",");
+    }
+    citations.add(new SermCit(entry));
   }
 
   public String getWord(){

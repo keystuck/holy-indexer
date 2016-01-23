@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.regex.*;
 import java.io.*;
 
-public class ScriptureIndex extends ArrayList<IndexEntry>{
+public class ScriptureIndex extends ArrayList<ScriptureEntry>{
 
 
 
@@ -32,12 +32,8 @@ public class ScriptureIndex extends ArrayList<IndexEntry>{
         //else add the scriptural reference on that line to the index
         else
         {
-          int space = nextL.indexOf(" ");
-          int colon = nextL.indexOf(":");
-          String bk = nextL.substring(0, space);
-          int chap = nextL.substring(space + 1, colon);
-          String vrs = nextL.substring(colon + 1);
-          ScriptureEntry indEnt = findOrAdd(new ScriptureEntry(bk, chap, vrs));
+          System.out.println("now adding " + nextL);
+          ScriptureEntry indEnt = findOrAdd(new ScriptCit(nextL));
           indEnt.add(sermon, para);
 
         }
@@ -49,8 +45,7 @@ public class ScriptureIndex extends ArrayList<IndexEntry>{
   }
 
 
-//rethink from here...
-  public ScriptureEntry findOrAdd(ScriptureEntry newEnt){
+  public ScriptureEntry findOrAdd(ScriptCit newEnt){
 
     if (this.size() == 0){
       add(new ScriptureEntry(newEnt, null));
@@ -60,10 +55,10 @@ public class ScriptureIndex extends ArrayList<IndexEntry>{
     boolean found = false;
     ScriptureEntry cur = this.get(i);
     while (i < this.size() && !found){
-      if (cur.compareTo(newEnt)==0){
+      if (cur.getScript().compareTo(newEnt)==0){
         found = true;
       }
-      else if (cur.compareTo(newEnt) < 0){
+      else if (cur.getScript().compareTo(newEnt) < 0){
           i++;
           if (i < this.size()){
             cur = this.get(i);
@@ -87,12 +82,11 @@ public class ScriptureIndex extends ArrayList<IndexEntry>{
       return super.add(newEnt);
     }
     else {
-      ScriptureEntry x = findOrAdd(newEnt;
+      ScriptureEntry x = findOrAdd(newEnt.getScript());
       x.add(newEnt.getCits());
       return true;
     }
   }
-//to here
 
 
   public String toString(){

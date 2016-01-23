@@ -46,10 +46,76 @@ notDone:      while (!done){
     }
     }
     else if (whatWant == 2){
-      //creating new scriptural index (automatically?)
+      boolean done = false;
+notDone2: while (!done){
+      System.out.print("Enter number/title of sermon or EXIT to exit: ");
+      String serm = input.next();
+      if (serm.equalsIgnoreCase("exit")){
+        done = true;
+        break notDone2;
+      }
+      System.out.print("Enter name of file (remember extension): ");
+      String fName = input.next();
+      if (fName.equalsIgnoreCase("exit")){
+        done = true;
+        break notDone2;
+      }
+      try {
+        //Open the given file
+        ScriptureIndex scriptIndex = new ScriptureIndex(serm, fName);
+        //create a new DocumentIndex from the file
+        BufferedWriter scriptWriter = new BufferedWriter(new FileWriter(serm + "-scr-index.txt"));
+        //Create an output file for that sermon: e.g. "1-index.txt"
+        //write the DocumentIndex to the output file
+
+        scriptWriter.write(scriptIndex.toString());
+        scriptWriter.flush();
+        scriptWriter.close();
+      }
+      catch (IOException e){
+        System.out.println("Error in IndexMaker: " + e.getMessage());
+      }
     }
+  }
     else if (whatWant == 3){
       //merging indices
+      boolean done = false;
+notDone3: while (!done){
+      System.out.print("Enter name of first file (remember extension): ");
+      String fName1 = input.next();
+      if (fName1.equalsIgnoreCase("exit")){
+        done = true;
+        break notDone3;
+      }
+      System.out.print("Enter name of second file (remember extension): ");
+      String fName2 = input.next();
+      if (fName2.equalsIgnoreCase("exit")){
+        done = true;
+        break notDone3;
+      }
+      System.out.print("Enter name of destination (remember extension): ");
+      String fName3 = input.next();
+      if (fName3.equalsIgnoreCase("exit")){
+        done = true;
+        break notDone3;
+      }
+      try {
+        //Open the given files
+        Index compIndex = new Index(new FileReader(fName1), new FileReader(fName2));
+        //create a new DocumentIndex from the file
+        BufferedWriter compWriter = new BufferedWriter(new FileWriter(fName3));
+        //Create an output file for that sermon: e.g. "1-index.txt"
+        //write the DocumentIndex to the output file
+
+        compWriter.write(compIndex.toString());
+        compWriter.flush();
+        compWriter.close();
+      }
+      catch (IOException e){
+        System.out.println("Error in IndexMaker: " + e.getMessage());
+      }
+    }
+
     }
     else {
       System.out.println("Goodbye.");

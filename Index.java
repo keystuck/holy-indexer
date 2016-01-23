@@ -44,6 +44,24 @@ public class Index extends ArrayList<IndexEntry>{
     }
   }
 
+  public Index(FileReader f1, FileReader f2){
+    this();
+    try {
+      BufferedReader file1 = new BufferedReader(f1);
+      BufferedReader file2 = new BufferedReader(f2);
+      String nextL1 = file1.readLine();
+      String nextL2 = file2.readLine();
+      while (nextL1 != null){
+        this.add(new IndexEntry(nextL1));
+      }
+      while (nextL2 != null){
+        this.add(new IndexEntry(nextL2));
+      }
+    } catch (IOException e){
+      System.out.println("problem in constructing merged index: " + e.getMessage());
+    }
+  }
+
   public IndexEntry findOrAdd(String newEnt){
 
     if (this.size() == 0){

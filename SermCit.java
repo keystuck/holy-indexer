@@ -21,6 +21,10 @@ import java.util.*;
      sermon = serm;
      paragraph = para;
    }
+   public SermCit(String altogether){
+     sermon = altogether.substring(0, altogether.indexOf("."));
+     paragraph = Integer.parseInt(altogether.substring(altogether.indexOf(".")+1));
+   }
 
    public String toString(){
      return sermon + "." + paragraph;

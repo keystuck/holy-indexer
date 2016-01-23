@@ -26,7 +26,7 @@ public class ScriptCit {
 
 
   public ScriptCit(String altogether){
-    int space = altogether.indexOf(" ");
+    int space = altogether.lastIndexOf(" ");
     int colon = altogether.indexOf(":");
     if (space == -1 || colon == -1 || colon == altogether.length() - 1){
       System.out.println("Problem in ScriptCit constructor");
