@@ -13,7 +13,7 @@ import java.util.*;
 
    //THIS SERMON LIST IS SPECIFIC TO THE BOOK BEING INDEXED
    protected List<String> Sermons = Arrays.asList("1", "2", "3", "4", "5", "6", "7",
-   "8", "9", "10", "11");
+   "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20");
 
    //constructor just initializes fields
    public SermCit(String serm, int para){

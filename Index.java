@@ -30,9 +30,7 @@ public class Index extends ArrayList<IndexEntry>{
         //else add the phrase on that line to the index
         else
         {
-          System.out.println("nextL = " + nextL);
           nextL = nextL.substring(0, 1).toUpperCase() + nextL.substring(1);
-          System.out.println("now it's " + nextL);
           IndexEntry indEnt = findOrAdd(nextL);
           indEnt.add(sermon, para);
 

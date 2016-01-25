@@ -82,6 +82,9 @@ public class ScriptureEntry{
       else if (i == citations.size() && citations.get(i-1).compareTo(newCit) < 0){
         citations.add(newCit);
       }
+      else {
+        System.out.println("In what should be unreachable in ScriptureEntry");
+      }
     }
   }
 
