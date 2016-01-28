@@ -1,17 +1,19 @@
-// ScriptCit for Scriptural Citations
-//Adapted from SermCit
-//Emily Stuckey
-//1-6-16
-//redefined 1-21-16
-//doesn't need info about sermon - just about bible citation
-
+/* ScriptCit for Scriptural Citations
+ * Adapted from SermCit
+ * Emily Stuckey
+ * 1-6-16
+ * redefined 1-21-16
+ * doesn't need info about sermon - just about bible citation
+ */
 import java.util.*;
 
-public class ScriptCit {
+public class ScriptCit implements Comparable<ScriptCit> {
+  /* Example: book = "John", chapter = 5, verse = "1-3" for John 5:1-3 */
   private String book;
   private int chapter;
   private String verse;
 
+/* Order of Books of the Bible with appropriate abbreviations */
 
   private List<String> Books = Arrays.asList("Gen", "Exod", "Lev", "Num", "Deut",
   "Josh", "Judg", "Ruth", "1 Sam", "2 Sam", "1 Kgs", "2 Kgs", "1 Chr", "2 Chr",
@@ -25,6 +27,10 @@ public class ScriptCit {
   "2 John", "3 John", "Jude", "Rev");
 
 
+  /** constructor from a String
+   * used when you have "John 5:1-3" and need to split it up
+   * @param altogether the complete String
+   */
   public ScriptCit(String altogether){
     int space = altogether.lastIndexOf(" ");
     int colon = altogether.indexOf(":");
@@ -38,38 +44,61 @@ public class ScriptCit {
     }
   }
 
+  /** constructor from individual pieces
+   * @param bk Bible book (e.g. "John")
+   * @param bChap chapter (e.g. 1)
+   * @param bPara the verse or verses as a string
+   */
   public ScriptCit(String bk, int bChap, String bPara){
     book = bk;
     chapter = bChap;
     verse = bPara;
   }
 
+  @Override
   public String toString(){
     return book + " " + chapter + ":" + verse;
   }
 
+  /** compareTo checks order of books, then chapters, then verses
+   * @param other Other scritpural citation
+   */
+   @Override
   public int compareTo(ScriptCit other){
+    //compare books
     int diff = Integer.compare(Books.indexOf(book), Books.indexOf(other.book));
     if (diff != 0){
       return diff;
     }
+    //compare chapters
     else if (chapter != other.chapter){
       return Integer.compare(chapter, other.chapter);
     }
+
+    //to compare verses, must consider that the reference might be annotated
+    // "Vulg" (Vulgate) or "LXX" (Septuagint) which should be separate
     String thisverse = verse;
     String otherverse = other.verse;
+    //replace "Vulg" with "0000" and "LXX" with "1111" to separate
     if (verse.contains("Vulg")){
       thisverse = thisverse.substring(0, thisverse.indexOf("V")) + "0000";
     }
     else if (verse.contains("LXX")){
       thisverse = thisverse.substring(0, thisverse.indexOf("LXX")) + "1111";
     }
+    //do same for other citation
     if (otherverse.contains("Vulg")){
       otherverse = otherverse.substring(0, otherverse.indexOf("V")) + "0000";
     }
     else if (otherverse.contains("LXX")){
       otherverse = otherverse.substring(0, otherverse.indexOf("LXX")) + "1111";
     }
+
+    //must also consider possibility of range of verses - either citation could
+    //be "John 5:1-4" or "John 1:4"
+    //first & second will hold beginning & end of range for this citation
+    // and othFirst & othSecond for other
+    //if there is no range, first will be the same as second, etc.
     int othFirst = -1;
     int othSecond = -1;
     int first = -1;
