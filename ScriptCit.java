@@ -1,4 +1,4 @@
-/* ScriptCit for Scriptural Citations
+/** ScriptCit for Scriptural Citations
  * Adapted from SermCit
  * Emily Stuckey
  * 1-6-16
