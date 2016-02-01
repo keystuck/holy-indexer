@@ -4,16 +4,13 @@ import java.util.*;
  * represents the index entry for a single word/phrase
  * example:    Holy Spirit     1.2, 1.5, 4.7
  */
-
-import java.util.*;
-
 public class IndexEntry implements Comparable<IndexEntry>{
   /** Word or phrase to be indexed */
   private String word;
   /** List of citations */
   private List<SermCit> citations;
 
-/** Constructor given phrase & list
+/** Constructor given phrase and list
  * @param wd Phrase to index
  * @param cits List of citations, comma-separated
  */
@@ -23,29 +20,29 @@ public class IndexEntry implements Comparable<IndexEntry>{
   }
 
   /** Constructor given word, sermon, paragraph number for first reference
-   * @para wd Phrase to index
+   * @param wd Phrase to index
    * @param sermon Sermon where reference occurs
    * @param para Paragraph within sermon
    */
   public IndexEntry(String wd, String sermon, int para){
-    this(wd, null);
+    this(wd, null);   // Initialize citation list to null
     this.add(sermon, para);
   }
 
-/** Constructor given a string containing phrase & one reference
+/** Constructor given a string containing phrase and one reference
  * @param entry String e.g. "Virgin Mary\t1.3"
  */
   public IndexEntry(String entry){
     citations = new ArrayList<SermCit>();
-    word = entry.substring(0, entry.indexOf("\t"));
+    word = entry.substring(0, entry.indexOf("\t"));   // Separate entry into phrase and everything else
     entry = entry.substring(entry.lastIndexOf("\t")+1);
-    int comm = entry.indexOf(",");
+    int comm = entry.indexOf(",");    // If there are many citations, loop through to add all
     while (comm != -1){
       citations.add(new SermCit(entry.substring(0, comm)));
       entry = entry.substring(comm + 2);
       comm = entry.indexOf(",");
     }
-    citations.add(new SermCit(entry));
+    citations.add(new SermCit(entry));  // There will be one citation after the last comma; add it
   }
 
  /** Return phrase
@@ -67,19 +64,21 @@ public class IndexEntry implements Comparable<IndexEntry>{
   */
   public void add(SermCit newCit){
     if (citations == null){
-      citations = new ArrayList<SermCit>();
+      citations = new ArrayList<SermCit>();   // Create an empty list
     }
     if (citations.isEmpty()){
-      citations.add(newCit);
+      citations.add(newCit);      // If empty list, add the citation
     }
     else {
-      int i = 0;
+      int i = 0;    //look for location to add citation
       while (i < citations.size() && citations.get(i).compareTo(newCit)< 0){
         i++;
       }
+      //if there's more list to go, add it here
       if (i < citations.size() && citations.get(i).compareTo(newCit) > 0){
         citations.add(i, newCit);
       }
+      //if you're at the end of the list, add it to the end of the list
       else if (i == citations.size() && citations.get(i-1).compareTo(newCit) < 0){
         citations.add(newCit);
       }
