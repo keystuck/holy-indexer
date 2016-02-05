@@ -10,7 +10,10 @@ import java.io.*;
 public class IndexMaker {
   public IndexMaker(){
     Scanner input = new Scanner(System.in);
-    System.out.print("Enter 1 to create a new Sermon index, 2 to create a new Scriptural index, 3 to merge indices, 4 to merge Scriptural indices, anything else to exit: ");
+    System.out.print("Enter 1 to create a new Sermon index, 2 to create a new ");
+    System.out.print("scriptural index, 3 to merge indices, 4 to merge Scriptural ");
+    System.out.print("indices, 5 to search a sermon for Scriptural indices ");
+    System.out.print("(and make a scriptural index), anything else to exit: ");
     int whatWant = input.nextInt();
     if (whatWant == 1){
       boolean done = false;
@@ -155,6 +158,43 @@ notDone4: while (!done){
       }
     }
     }
+/*    else if (whatWant == 5){
+      boolean done = false;
+notDone5:      while (!done){
+  //creating new index
+      System.out.print("Enter number/title of sermon or EXIT to exit: ");
+      String serm = input.next();
+      if (serm.equalsIgnoreCase("exit")){
+        done = true;
+        break notDone5;
+      }
+      System.out.print("Enter name of file (remember extension): ");
+      String fName = input.next();
+      if (fName.equalsIgnoreCase("exit")){
+        done = true;
+        break notDone5;
+      }
+      try {
+        //Open the given file
+        //create an index by scanning for the scriptural references
+        ScrStrIndex sermIndex = new ScrStrIndex(serm, fName);
+    //create a new DocumentIndex from the file
+        BufferedWriter sermWriter = new BufferedWriter(new FileWriter(serm + "-script1-index.txt"));
+    //Create an output file for that sermon: e.g. "1-index.txt"
+    //write the index to the output file
+
+    sermWriter.write(sermIndex.toString());
+    sermWriter.flush();
+    sermWriter.close();
+  }
+
+  catch (IOException e){
+    System.out.println("Error in IndexMaker: " + e.getMessage());
+  }
+}
+}
+*/
+
     else {
       System.out.println("Goodbye.");
     }
