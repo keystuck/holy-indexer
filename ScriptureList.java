@@ -19,7 +19,8 @@ public class ScriptureList extends ArrayList<ArrayList<String>>{
       String nextL = fRead.readLine();
       while (nextL != null){
         nextL = nextL.trim();
-        Pattern p = Pattern.compile("(^\\d+\\.)");
+        Pattern p = Pattern.compile("^(\\d+)\\.");
+        //use "^[LXVI]*\\.?(\\d+)\\." for Pope Gregory
         Matcher m = p.matcher(nextL);
         if (m.find()){
           //new paragraph found -- start a new ArrayList, add the paragraph number,
@@ -28,6 +29,7 @@ public class ScriptureList extends ArrayList<ArrayList<String>>{
           current.add(m.group(1));
           add(current);
         }
+        //Change {} to [] in three places for Pope Gregory
         int openBInd = nextL.indexOf("{");
         while (openBInd != -1){
           int closeBInd = nextL.indexOf("}");
