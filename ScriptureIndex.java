@@ -62,7 +62,36 @@ public class ScriptureIndex extends ArrayList<ScriptureEntry>{
       System.out.println("problem in constructing merged index: " + e.getMessage());
     }
   }
+  /** Constructor to merge two indices
+   * @param ind1 The first Index
+   * @param ind2 The second Index
+   */
+  public ScriptureIndex(ScriptureIndex ind1, ScriptureIndex ind2){
+    this();
+    for (ScriptureEntry ent : ind1){
+      add(ent);
+    }
+    for (ScriptureEntry ent2 : ind2){
+      add(ent2);
+    }
+  }
 
+  /** Constructor to read an index from a file (used for merging files)
+   * @param f FileReader object containing index in text form
+   */
+  public ScriptureIndex(FileReader f){
+    this();
+    try {
+      BufferedReader file1 = new BufferedReader(f);
+      String nextL = file1.readLine();
+      while (nextL != null){
+        add(new ScriptureEntry(nextL));
+        nextL = file1.readLine();
+      }
+    } catch (IOException e){
+      System.out.println("problem creating an index from a file: " + e.getMessage());
+    }
+  }
 
 
   public ScriptureEntry findOrAdd(ScriptCit newEnt){

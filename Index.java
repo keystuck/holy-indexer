@@ -54,8 +54,8 @@ public class Index extends ArrayList<IndexEntry>{
   }
 
   /** Merge constructor which takes two Index files
-   * @param f1 File to merge into - this will overwrite f1 with the merged information
-   * @param f2 File to merge from - f2 will be unchanged
+   * @param f1 File to merge into
+   * @param f2 File to merge from
    */
   public Index(FileReader f1, FileReader f2){
     this();
@@ -76,6 +76,37 @@ public class Index extends ArrayList<IndexEntry>{
       }
     } catch (IOException e){
       System.out.println("problem in constructing merged index: " + e.getMessage());
+    }
+  }
+
+  /** Constructor to merge two indices
+   * @param ind1 The first Index
+   * @param ind2 The second Index
+   */
+  public Index(Index ind1, Index ind2){
+    this();
+    for (IndexEntry ent : ind1){
+      add(ent);
+    }
+    for (IndexEntry ent2 : ind2){
+      add(ent2);
+    }
+  }
+
+  /** Constructor to read an index from a file (used for merging files)
+   * @param f FileReader object containing index in text form
+   */
+  public Index(FileReader f){
+    this();
+    try {
+      BufferedReader file1 = new BufferedReader(f);
+      String nextL = file1.readLine();
+      while (nextL != null){
+        add(new IndexEntry(nextL));
+        nextL = file1.readLine();
+      }
+    } catch (IOException e){
+      System.out.println("problem creating an index from a file: " + e.getMessage());
     }
   }
 

@@ -5,6 +5,7 @@
 //1-10-16
 import java.util.Scanner;
 import java.io.*;
+import java.util.ArrayList;
 
 
 public class IndexMaker {
@@ -83,18 +84,22 @@ notDone2: while (!done){
     else if (whatWant == 3){
       //merging indices
       boolean done = false;
+      ArrayList<String> filesToMerge = new ArrayList<String>();
+      boolean moreFiles = true;
 notDone3: while (!done){
-      System.out.print("Enter name of first file (remember extension): ");
-      String fName1 = input.next();
-      if (fName1.equalsIgnoreCase("exit")){
-        done = true;
-        break notDone3;
-      }
-      System.out.print("Enter name of second file (remember extension): ");
-      String fName2 = input.next();
-      if (fName2.equalsIgnoreCase("exit")){
-        done = true;
-        break notDone3;
+  filesToGo: while (moreFiles){
+
+        System.out.print("Enter name of next file to merge (remember extension) or DONE: ");
+        String fName2 = input.next();
+        if (fName2.equalsIgnoreCase("exit")){
+          done = true;
+          break notDone3;
+        }
+        if (fName2.equalsIgnoreCase("done")){
+          moreFiles = false;
+          break filesToGo;
+        }
+        filesToMerge.add(fName2);
       }
       System.out.print("Enter name of destination (remember extension): ");
       String fName3 = input.next();
@@ -102,10 +107,24 @@ notDone3: while (!done){
         done = true;
         break notDone3;
       }
+      if (filesToMerge.size() < 2){
+        System.out.println("Not enough files!");
+        done = true;
+        break notDone3;
+      }
       try {
-        //Open the given files
-        Index compIndex = new Index(new FileReader(fName1), new FileReader(fName2));
-        //create a new DocumentIndex from the file
+        String file1 = filesToMerge.remove(0);
+        Index ind1 = new Index(new FileReader(file1));
+        Index compIndex = new Index();
+        while (filesToMerge.size() != 0){
+
+          //Open the given files
+          Index ind2 = new Index(new FileReader(filesToMerge.remove(0)));
+          compIndex = new Index(ind1, ind2);
+          //create a new DocumentIndex from the file
+          ind1 = compIndex;
+        }
+
         BufferedWriter compWriter = new BufferedWriter(new FileWriter(fName3));
         //Create an output file for that sermon: e.g. "1-index.txt"
         //write the DocumentIndex to the output file
@@ -119,55 +138,72 @@ notDone3: while (!done){
       }
     }
   }
-    else if (whatWant == 4){
-      //merging scriptural indices
-      boolean done = false;
+  else if (whatWant == 4){
+    //merging indices
+    boolean done = false;
+    ArrayList<String> filesToMerge = new ArrayList<String>();
+    boolean moreFiles = true;
 notDone4: while (!done){
-      System.out.print("Enter name of first file (remember extension): ");
-      String fName1 = input.next();
-      if (fName1.equalsIgnoreCase("exit")){
-        done = true;
-        break notDone4;
-      }
-      System.out.print("Enter name of second file (remember extension): ");
+filesToGo: while (moreFiles){
+
+      System.out.print("Enter name of next file to merge (remember extension) or DONE: ");
       String fName2 = input.next();
       if (fName2.equalsIgnoreCase("exit")){
         done = true;
         break notDone4;
       }
-      System.out.print("Enter name of destination (remember extension): ");
-      String fName3 = input.next();
-      if (fName3.equalsIgnoreCase("exit")){
-        done = true;
-        break notDone4;
+      if (fName2.equalsIgnoreCase("done")){
+        moreFiles = false;
+        break filesToGo;
       }
-      try {
-        //Open the given files
-        ScriptureIndex compIndex = new ScriptureIndex(new FileReader(fName1), new FileReader(fName2));
-        //create a new DocumentIndex from the file
-        BufferedWriter compWriter = new BufferedWriter(new FileWriter(fName3));
-        //Create an output file for that sermon: e.g. "1-index.txt"
-        //write the DocumentIndex to the output file
+      filesToMerge.add(fName2);
+    }
+    System.out.print("Enter name of destination (remember extension): ");
+    String fName3 = input.next();
+    if (fName3.equalsIgnoreCase("exit")){
+      done = true;
+      break notDone4;
+    }
+    if (filesToMerge.size() < 2){
+      System.out.println("Not enough files!");
+      done = true;
+      break notDone4;
+    }
+    try {
+      String file1 = filesToMerge.remove(0);
+      ScriptureIndex ind1 = new ScriptureIndex(new FileReader(file1));
+      ScriptureIndex compIndex = new ScriptureIndex();
+      while (filesToMerge.size() != 0){
 
-        compWriter.write(compIndex.toString());
-        compWriter.flush();
-        compWriter.close();
+        //Open the given files
+        ScriptureIndex ind2 = new ScriptureIndex(new FileReader(filesToMerge.remove(0)));
+        compIndex = new ScriptureIndex(ind1, ind2);
+        //create a new DocumentIndex from the file
+        ind1 = compIndex;
       }
-      catch (IOException e){
-        System.out.println("Error in IndexMaker: " + e.getMessage());
-      }
+
+      BufferedWriter compWriter = new BufferedWriter(new FileWriter(fName3));
+      //Create an output file for that sermon: e.g. "1-index.txt"
+      //write the DocumentIndex to the output file
+
+      compWriter.write(compIndex.toString());
+      compWriter.flush();
+      compWriter.close();
     }
+    catch (IOException e){
+      System.out.println("Error in IndexMaker: " + e.getMessage());
     }
-/*    else if (whatWant == 5){
+  }
+}
+    else if (whatWant == 5){
       boolean done = false;
 notDone5:      while (!done){
-  //creating new index
-      System.out.print("Enter number/title of sermon or EXIT to exit: ");
+/*      System.out.print("Enter number/title of sermon or EXIT to exit: ");
       String serm = input.next();
       if (serm.equalsIgnoreCase("exit")){
         done = true;
         break notDone5;
-      }
+      }*/                 //probably not necessary for this
       System.out.print("Enter name of file (remember extension): ");
       String fName = input.next();
       if (fName.equalsIgnoreCase("exit")){
@@ -177,15 +213,21 @@ notDone5:      while (!done){
       try {
         //Open the given file
         //create an index by scanning for the scriptural references
-        ScrStrIndex sermIndex = new ScrStrIndex(serm, fName);
-    //create a new DocumentIndex from the file
-        BufferedWriter sermWriter = new BufferedWriter(new FileWriter(serm + "-script1-index.txt"));
-    //Create an output file for that sermon: e.g. "1-index.txt"
-    //write the index to the output file
+        ScriptureList scriptList = new ScriptureList(fName);
+    //create a new ScriptureList from the file
+    int extInd = fName.indexOf(".txt");
+    if (extInd != -1){
+      fName = fName.substring(0, extInd);
+    }
+        BufferedWriter listWriter = new BufferedWriter(new FileWriter(fName + "-scripture-list.txt"));
+    //Create an output file for that file: e.g. "1-scripture-list.txt"
+    //write the list to the output file
+    //note: thie will still need to be reviewed by hand!
 
-    sermWriter.write(sermIndex.toString());
-    sermWriter.flush();
-    sermWriter.close();
+    listWriter.write(scriptList.toString());
+    listWriter.flush();
+    listWriter.close();
+    System.out.println("List made; see " + fName + "-scripture-list.txt");
   }
 
   catch (IOException e){
@@ -193,7 +235,7 @@ notDone5:      while (!done){
   }
 }
 }
-*/
+
 
     else {
       System.out.println("Goodbye.");
