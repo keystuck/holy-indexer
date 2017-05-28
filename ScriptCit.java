@@ -37,6 +37,9 @@ public class ScriptCit implements Comparable<ScriptCit> {
     if (space == -1 || colon == -1 || colon == altogether.length() - 1){
       System.out.println("Problem in ScriptCit constructor on " + altogether);
     }
+    else if (colon < space){
+        System.out.println("colon-space problem at " + altogether);
+    }
     else {
       book = altogether.substring(0, space);
       chapter = Integer.parseInt(altogether.substring(space + 1, colon));
@@ -80,18 +83,25 @@ public class ScriptCit implements Comparable<ScriptCit> {
     String thisverse = verse;
     String otherverse = other.verse;
     //replace "Vulg" with "0000" and "LXX" with "1111" to separate
+      //as of 5-27-17 -- also "Var" with "2222"
     if (verse.contains("Vulg")){
-      thisverse = thisverse.substring(0, thisverse.indexOf("V")) + "0000";
+      thisverse = thisverse.substring(0, thisverse.indexOf("Vulg")) + "0000";
     }
     else if (verse.contains("LXX")){
       thisverse = thisverse.substring(0, thisverse.indexOf("LXX")) + "1111";
     }
+    else if (verse.contains("Var")){
+        thisverse = thisverse.substring(0, thisverse.indexOf("Var")) + "2222";
+    }
     //do same for other citation
     if (otherverse.contains("Vulg")){
-      otherverse = otherverse.substring(0, otherverse.indexOf("V")) + "0000";
+      otherverse = otherverse.substring(0, otherverse.indexOf("Vulg")) + "0000";
     }
     else if (otherverse.contains("LXX")){
       otherverse = otherverse.substring(0, otherverse.indexOf("LXX")) + "1111";
+    }
+    else if (otherverse.contains("Var")){
+        otherverse = otherverse.substring(0, otherverse.indexOf("Var")) + "2222";
     }
 
     //must also consider possibility of range of verses - either citation could
